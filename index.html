@@ -1,0 +1,424 @@
+<!DOCTYPE html> 
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mabb - Язык программирования для MabbOS</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --background-color: #f5f5f5;
+            --text-color: #333;
+            --code-bg: #282c34;
+            --code-text: #abb2bf;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            color: var(--primary-color);
+        }
+
+        nav {
+            background-color: var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
+        section {
+            background-color: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            line-height: 1.4;
+        }
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .command-table th, .command-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        .command-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .command-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .task {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .task h4 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        .download-section {
+            text-align: center;
+            background-color: #e8f4fc;
+            padding: 2rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .install-steps {
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .requirements {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav a {
+                padding: 0.8rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Язык программирования Mabb</h1>
+            <p>Простой и быстрый язык для создания приложений в MabbOS</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">О языке</a></li>
+            <li><a href="#commands">Команды</a></li>
+            <li><a href="#examples">Примеры кода</a></li>
+            <li><a href="#tasks">Задания</a></li>
+            <li><a href="#download">Скачать</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>О языке программирования Mabb</h2>
+            <p>Mabb - это язык программирования, созданный специально для разработки приложений в операционной системе MabbOS. Его синтаксис напоминает Basic, но с некоторыми особенностями:</p>
+            <ul>
+                <li>Нет отступов и точек с запятой</li>
+                <li>Нет поддержки ООП (похож на C в этом плане)</li>
+                <li>Все команды начинаются с символа подчеркивания <code>_</code></li>
+                <li>Команды пишутся в верхнем регистре (CAPS)</li>
+                <li>Минималистичный набор команд для максимальной скорости</li>
+            </ul>
+        </section>
+
+        <section id="commands">
+            <h2>Команды Mabb</h2>
+            
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Команда</th>
+                        <th>Описание</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>_PRINT</code></td>
+                        <td>Выводит текст или значение переменной (с <code>_V</code>)</td>
+                        <td><code>_PRINT Hello world</code><br><code>_PRINT _V var</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_VAR</code></td>
+                        <td>Создает переменную разных типов: <code>_TEXT</code>, <code>_NUMBER</code>, <code>_INPUT</code></td>
+                        <td><code>_VAR _TEXT name Lol</code><br><code>_VAR _NUMBER _RANDOM lol 0 10</code><br><code>_VAR _INPUT answer Enter a number</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_EXECUTE</code></td>
+                        <td>Начинает программу с указанной строчки</td>
+                        <td><code>_EXECUTE 1</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_SECOND</code></td>
+                        <td>Ждет указанное количество секунд</td>
+                        <td><code>_SECOND 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_IF</code></td>
+                        <td>Выполняет блок, если условие истинно. Можно указывать <code>_INT</code> или <code>_STR</code> для преобразования типов</td>
+                        <td><code>_IF lol = _INT 1</code><br><code>_IF name = _STR Lol</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_ENDIF</code></td>
+                        <td>Заканчивает блок <code>_IF</code></td>
+                        <td><code>_ENDIF</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_OPERATION</code></td>
+                        <td>Выполняет арифметические операции или работает с текстом (<code>_LEN</code>, <code>_COUNT</code>, <code>_REPLACE</code>, <code>_CHANGE</code>)</td>
+                        <td><code>_OPERATION result num1 + num2</code><br><code>_OPERATION len str _LEN</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>_END</code></td>
+                        <td>Заканчивает программу</td>
+                        <td><code>_END</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="examples">
+            <h2>Полезные примеры кода</h2>
+            
+            <h3>Цикл for</h3>
+            <pre>
+_VAR _NUMBER count 0
+// В переменной range нужно указать, сколько раз будет выполнятся цикл for
+_VAR _NUMBER range 5
+// Переменная для прибавления в счетчик цифру
+_VAR _NUMBER lol 1
+// Сам цикл
+_IF count < range
+_OPERATION count count + lol
+_PRINT _V count
+// Тело цикла for. Сюда добавляйте или удаляйте все, что угодно кроме _EXECUTE 7
+_EXECUTE 7
+_ENDIF
+
+_PRINT The end</pre>
+
+            <h3>Цикл while</h3>
+            <pre>
+// Сам цикл. Укажите сюда условие, при котором цикл перестанет выполнятся.
+_IF
+// Тело цикла while. Сюда добавляйте или удаляйте все, что угодно кроме _EXECUTE 7
+_EXECUTE 7
+_ENDIF
+
+_PRINT The end</pre>
+
+            <h3>Функция</h3>
+            <pre>
+_VAR _NUMBER func 0
+// Значение, при котором выполняется фунция
+_VAR _NUMBER execution 1
+// Если переменная равна 1, то функция выполняется
+_IF func = execution
+// Отнятие из переменной, чтобы функция не выполнялась снова.
+_OPERATION func func - execution
+// Тело функции. Добавьте сюда любые команды
+_ENDIF
+
+_OPERATION func func + execution
+_EXECUTE 5
+// Вызов функции</pre>
+        </section>
+
+        <section id="tasks">
+            <h2>Задания для практики</h2>
+            
+            <div class="task">
+                <h4>Задача 1. Калькулятор</h4>
+                <p>Создайте калькулятор, который принимает первую цифру, арифметическую операцию и вторую цифру, а после выводит ответ. Сделайте так, чтобы программа работала всегда с помощью цикла.</p>
+            </div>
+            
+            <div class="task">
+                <h4>Задача 2. Подсчет символов</h4>
+                <p>Сделайте программу, которая принимает у пользователя строку, считает сколько в ней указанных пользователем символов и выводит ответ.</p>
+            </div>
+            
+            <div class="task">
+                <h4>Задача 3. Магический шар</h4>
+                <p>Создайте магический шар, который принимает у пользователя вопрос, а после выдает случайно "yes", "no" и т.д.</p>
+            </div>
+            
+            <div class="task">
+                <h4>Задача 4. Секундомер</h4>
+                <p>Создайте секундомер, который принимает у пользователя количество секунд, и ждет это количество секунд, выводя сколько секунд прошло.</p>
+            </div>
+            
+            <div class="task">
+                <h4>Задача 5. Игра-угадайка</h4>
+                <p>Создайте игру-угадайку, где нужно угадать число от 0 до 100. Пользователь вводит число от 0 до 100 и выводится меньше число чем загаданное или же меньше. Игроку дается 10 попыток.</p>
+            </div>
+            
+            <div class="task">
+                <h4>Задача 6. Заметки</h4>
+                <p>Создайте программу для хранения заметок. Там пользователь может хранить любой текст, удалять определенную заметку или добавлять.</p>
+            </div>
+        </section>
+
+        <section id="download" class="download-section">
+            <h2>Скачать MabbOS</h2>
+            <p>Получите последнюю версию MabbOS симуляцию</p>
+            
+            <a href="https://github.com/Mabb12/MabbOS-3.0" class="download-btn">Скачать MabbOS Simulator (ZIP, 2.4 MB)</a>
+            
+            <h3>Системные требования</h3>
+            <ul>
+                <li>Операционная система: Windows 10/11, Ubuntu 20.04+, macOS 10.15+</li>
+                <li>Процессор: 2.4 ГГц или быстрее</li>
+                <li>Оперативная память: 1 ГБ</li>
+                <li>Свободное место на диске: 20 MБ</li>
+            </ul>
+            
+            <h3>Инструкция по установке</h3>
+            <ol>
+                <li>Скачайте ZIP-архив</li>
+                <li>Распакуйте архив на рабочий стол</li>
+                <li>Запустите файл SystemMabb.py в компиляторе Python</li>
+            </ol>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Язык программирования Mabb. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html> Язык программирования Mabb. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>
